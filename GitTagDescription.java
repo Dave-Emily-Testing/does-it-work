@@ -49,19 +49,15 @@ public class GitTagDescription {
     public String getNextTagName() {
         return (this.nextTag == null) ? "" : this.nextTag.getName();
     }
-    
-    public String getNextTagName() {
-        return (this.nextTag == null) ? "" : this.nextTag.getName();
-    }
 
     /**
      * Returns whether the commit is tagged
      *
      * @return {@code true} if the commit is tagged
      */
-//     public boolean isTagged() {
-//         return distance == 0;
-//     }
+    public boolean isTagged() {
+        return distance == 0;
+    }
 
     /**
      * Returns the string representation of this description
@@ -71,9 +67,23 @@ public class GitTagDescription {
      *
      * @return The string representation of this description
      */
-    @Override
-    public String toString() {
-      return "TODO: implement this method";
+    @Override 
+    public String toString() { 
+        if (this.nextTag == null) {
+            return this.abbreviatedCommitId;
+        } else if (this.distance == 0) {
+            return this.nextTag.getName();
+        } else {
+            if (!this.nextTag.getName().isEmpty() &&
+                this.distance != 0) {
+                      return String.format("%s-%d-g%s",
+                          this.nextTag.getName(),
+                          this.distance,
+                          this.abbreviatedCommitId);
+            } else {
+              return "undefined";
+            }
+        }
     }
 
 }
